@@ -21,7 +21,7 @@ env:
   GitHubName: ${{ secrets.GitHubName }}
   SFPassword: ${{ secrets.SFPassword }}
   SFUserName: ${{ secrets.SFUserName }}
-  #TARGET: "pbrp"
+  TARGET: "pbrp"
   #EXTRA_CMD: "Extra Commands Here"
 
 jobs:
