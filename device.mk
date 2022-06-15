@@ -1,6 +1,9 @@
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
+# Enable updating of APEXes
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
 LOCAL_PATH := device/oneplus/OP6xT
 
 # define hardware platform
@@ -23,11 +26,8 @@ PRODUCT_PACKAGES += \
     otapreopt_script \
 	cppreopts.sh \
     update_engine \
-    update_verifier
-
-PRODUCT_PACKAGES += \
-    bootctrl.$(PRODUCT_PLATFORM) \
-    update_engine_sideload
+    update_verifier \
+	update_engine_sideload
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -41,25 +41,16 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service \
-    android.hardware.boot@1.0-impl-wrapper.recovery \
-    android.hardware.boot@1.0-impl-wrapper \
     android.hardware.boot@1.0-impl.recovery \
-    bootctrl.$(PRODUCT_PLATFORM) \
+	bootctrl.$(PRODUCT_PLATFORM) \
     bootctrl.$(PRODUCT_PLATFORM).recovery
+	
+PRODUCT_PACKAGES_DEBUG += \
+    bootctrl
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-
-# tzdata
-PRODUCT_PACKAGES += \
-    tzdata_twrp
-
-# Recovery Modules
-PRODUCT_HOST_PACKAGES += \
-    libandroidicu
 
 # Additional binaries & libraries needed for recovery
 TARGET_RECOVERY_DEVICE_MODULES += \
@@ -68,8 +59,7 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libion \
     libicuuc \
     libpcrecpp \
-    libxml2 \
-    tzdata
+    libxml2
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.base@1.0.so \
@@ -77,8 +67,8 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libicuuc.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so 
-
-# Fastbootd (Custom ROM)
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
+	
+# fastbootd
 PRODUCT_PACKAGES += \
-	fastbootd
+    fastbootd

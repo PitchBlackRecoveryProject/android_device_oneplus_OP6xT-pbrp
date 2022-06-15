@@ -162,3 +162,6 @@ on property:twrp.all.users.decrypted=true && property:ro.boot.project_codename=f
 
 on property:twrp.all.users.decrypted=true && property:ro.boot.project_codename=fajitat
     stop keymaster-4-0-qti
+	
+on property:init.svc.fastbootd=running
+    rm /dev/block/bootdevice/by-name/boot_aging

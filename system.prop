@@ -1,2 +1,4 @@
 ro.product.board=sdm845
 ro.board.platform=sdm845
+ro.secure=0
+ro.fastbootd.available=true
